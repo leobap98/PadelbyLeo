@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Integrantes de Equipos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Importar iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            margin: 0;
+        }
+         .custom-header {
+            background-color: #f8f9fa; /* Fondo gris claro */
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e9ecef; /* Borde sutil */
+            margin-bottom: 0; /* Elimina espacio inferior para integrar con la tarjeta */
+        }
+        .search-box {
+            max-width: 500px; /* Ancho controlado para el buscador */
+        }
+        .card-container {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            width: 100%;
+            max-width: 600px;
+        }
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            text-align: center;
+            font-weight: bold;
+            padding: 1.2rem;
+        }
+        .team-section {
+            background-color: #f1f8ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .team-title {
+            color: #0d6efd;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 500;
+            width: 100%;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="custom-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Título a la izquierda -->
+                <div class="col-md-4">
+                    <h1 class="m-0 fs-3 fw-bold">PADEL<span class="fw-light">By Leo</span></h1>
+                </div>
+
+                <!-- Buscador centrado -->
+                <div class="col-md-6 offset-md-1">
+                    <form th:action="@{/redirect}" method="get">
+                        <div class="input-group search-box">
+                            <input name="searchId" type="text" class="form-control" placeholder="Buscar partido" aria-label="Buscar">
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 100px);">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Registro de Integrantes</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/}" method="post" th:object="${participantesDto}">
+                        <!-- Equipo 1 -->
+                        <div class="team-section">
+                            <h5 class="team-title">Equipo 1</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="equipo1-integrante1" class="form-label">Integrante 1</label>
+                                    <input th:field="*{participanteA1}" type="text" class="form-control" id="equipo1-integrante1" placeholder="Nombre completo" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="equipo1-integrante2" class="form-label">Integrante 2</label>
+                                    <input th:field="*{participanteA2}" type="text" class="form-control" id="equipo1-integrante2" placeholder="Nombre completo" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Equipo 2 -->
+                        <div class="team-section">
+                            <h5 class="team-title">Equipo 2</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="equipo2-integrante1" class="form-label">Integrante 1</label>
+                                    <input th:field="*{participanteB1}" type="text" class="form-control" id="equipo2-integrante1" placeholder="Nombre completo" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="equipo2-integrante2" class="form-label">Integrante 2</label>
+                                    <input th:field="*{participanteB2}" type="text" class="form-control" id="equipo2-integrante2" placeholder="Nombre completo" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fecha, hora y localización -->
+                        <div class="team-section">
+                            <h5 class="team-title">Fecha, Hora y Localización</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fecha-hora" class="form-label">Fecha y Hora</label>
+                                    <input th:field="*{fecha}" type="datetime-local" class="form-control" id="fecha-hora" placeholder="17/06/2025 20:00" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Localizacion" class="form-label">Centro deportivo</label>
+                                    <input th:field="*{localizacion}" type="text" class="form-control" id="Localizacion" placeholder="Ej: Aspresso K7" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3 mt-3">
+                            <button name="opcion" value="random" type="submit" class="btn btn-lg text-white" style="background-color: #f2be38; border-color: #f2be38;">
+                                Randomizador <i class="fa-solid fa-dice ms-2"></i>
+                            </button>
+
+                            <button name="opcion" value="normal" type="submit" class="btn btn-primary btn-lg">Registrar Equipos</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
